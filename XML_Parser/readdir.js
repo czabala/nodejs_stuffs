@@ -1,4 +1,4 @@
-const testFolder = './BUS1505/';
+const testFolder = './BUS2092/';
 const resultFolder = './result_Folder/';
 const fs = require('fs');
 const p = require('./xml_parser.js');

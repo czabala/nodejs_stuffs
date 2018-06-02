@@ -4,6 +4,7 @@ const qs = require('querystring');
 const port = process.env.PORT || 4040;
 
 var requestBody = "";
+var targetTime, currentTime;
 
 http.createServer((request, response) => {
   
@@ -72,6 +73,21 @@ http.createServer((request, response) => {
   } else if (request.method === 'POST' && request.url === '/axis2_postfile'){
     response.writeHead(200, { 'Content-Type': 'text/plain' });
 	console.log("hey! i'm called axis2_postfile");
+  }else if (request.method === 'GET' && request.url === '/wait'){
+    console.log(`request method: ${request.method}`);	
+
+	//wait for 5 seconds...	
+	currentTime = Date.now();
+	targetTime = currentTime + 5000;
+	
+	while (currentTime < targetTime){
+	  currentTime = Date.now();	
+//	  console.log("waiting...");
+	}
+	//end wait for 5 seconds
+	
+    response.writeHead(200, { 'Content-Type': 'text/plain' });
+    response.end('Did i wait for 5 seconds?');
   } else {
     response.writeHead(404, { 'Content-Type': 'text/plain' });
     response.end(`Hello, called using ${request.url} Doco: 
@@ -89,7 +105,5 @@ http.createServer((request, response) => {
     console.error(`Hello, what the heck is ${request.url} ??? please explain.`);
   }
 }).listen(port);
-
-
 
 console.log(`listening to port ${port}`);
